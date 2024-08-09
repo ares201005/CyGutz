@@ -31,8 +31,10 @@ def save_gparam(iso=1, ispin=1, ityp_list=[0], imap_list=[0], na2_list=[2],
         f['/gmaxiter'] = np.asarray([max_iter])
         f['/dc_mode'] = np.asarray([ldc])
 
-        f['/dc_u_avg'] = u_avg_list
-        f['/dc_j_avg'] = j_avg_list
+        if u_avg_list is not None:
+            f['/dc_u_avg'] = u_avg_list
+        if j_avg_list is not None:
+            f['/dc_j_avg'] = j_avg_list
         if nelf_list is not None:
             f['/dc_nelf_list'] = nelf_list
 
@@ -115,3 +117,4 @@ def save_gparambands(kpt_wt, nelectron, nbmax, iso=1, ispin=1,
         for i, h1e in enumerate(h1e_list):
             # Fortran convention.
             f['/IMPURITY_' + str(i + 1) + '/H1E'] = h1e.T
+            f['/IMPURITY_' + str(i + 1) + '/H1E_SPIN1'] = h1e.T

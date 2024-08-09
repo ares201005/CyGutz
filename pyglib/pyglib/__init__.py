@@ -1,5 +1,5 @@
 from pyglib import basic
-from pyglib import estructure
+#from pyglib import estructure
 from pyglib import gutz
 from pyglib import gsolver
 from pyglib import io

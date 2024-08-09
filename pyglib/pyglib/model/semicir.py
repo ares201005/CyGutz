@@ -62,7 +62,7 @@ def gutz_model_setup(u=0.0, nmesh=5000, mu=0):
 
     # list of one-body part of the local Hamiltonians.
     # here the s-orbital is located at zero.
-    h1e_list = [np.zeros((norb2, norb2), dtype=np.complex)]
+    h1e_list = [np.zeros((norb2, norb2), dtype=np.complex128)]
 
     # generate GPARAMBANDS.h5
     # ensemble is set to 1 for grand canonical system.
@@ -76,7 +76,7 @@ def gutz_model_setup(u=0.0, nmesh=5000, mu=0):
     sigma[1::2, 1::2] = sigma[0::2, 0::2]
 
     # set Coulomb matrix
-    v2e = np.zeros((norb2,norb2,norb2,norb2), dtype=np.complex)
+    v2e = np.zeros((norb2,norb2,norb2,norb2), dtype=np.complex128)
     v2e[0,0,0,0] = v2e[0,0,1,1] = v2e[1,1,0,0] = v2e[1,1,1,1] = u
 
     # set the potential shift such that the system has particle-hole
@@ -89,7 +89,8 @@ def gutz_model_setup(u=0.0, nmesh=5000, mu=0):
     ginput.save_gparam(na2_list=[norb2],
             iembeddiag=-1, imix=0, sigma_list=[sigma],
             v2e_list=[v2e], nval_top_list=[norb2],
-            vdc2_list=vdc2_list, max_iter=500)
+            #vdc2_list=vdc2_list,
+            max_iter=500)
 
     # generate BAREHAM_0.h5 file.
     aTB.save_bareham(kps)

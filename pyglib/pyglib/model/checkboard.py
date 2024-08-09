@@ -69,7 +69,7 @@ def gutz_model_setup(u=0.0, spindeg=True, num_e=2., iembeddiag=-1):
     num_band_max = 2
 
     # set list of one-body part of the local Hamiltonian (trivial here.)
-    h1e_list = [np.array([[0,]], dtype=np.complex) for symbol in symbols]
+    h1e_list = [np.array([[0,]], dtype=np.complex128) for symbol in symbols]
 
     # create ``GPARAMBANDS.h5`` file
     ginput.save_gparambands(kps_wt, num_e, num_band_max, h1e_list=h1e_list)

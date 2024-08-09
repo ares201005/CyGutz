@@ -172,7 +172,7 @@ class TB(object):
                 if R not in self.Hr:  # the matrix for R is not set yet
                     self.Hr[R] = numpy.zeros((
                             self.Atoms.nspinorbitals,
-                            self.Atoms.nspinorbitals), dtype=numpy.complex)
+                            self.Atoms.nspinorbitals), dtype=numpy.complex128)
                 self.Hr[R][iorb, jorb] = t_hop
             else:
                 R, hr = ihop
@@ -202,7 +202,7 @@ class TB(object):
         if self.Hr is not None:
             reciprocalvector = self.Atoms.get_reciprocal_cell()
             self.hk = numpy.zeros((self.Atoms.nspinorbitals, \
-                    self.Atoms.nspinorbitals), dtype=numpy.complex)
+                    self.Atoms.nspinorbitals), dtype=numpy.complex128)
             ikcart = numpy.dot(kpt, reciprocalvector)
             for ir in self.Hr:
                 R = numpy.array(ir)
@@ -361,7 +361,7 @@ class TB(object):
 
 
     def save_bareham(self, kpts, ngroup=1):
-        nk_per_group = len(kpts)/ngroup + 1
+        nk_per_group = len(kpts)//ngroup + 1
         ik_start_list = [i*nk_per_group for i in range(ngroup)]
         for igroup, ik_start in enumerate(ik_start_list):
             with h5py.File('BAREHAM_'+str(igroup)+'.h5', 'w') as f:
