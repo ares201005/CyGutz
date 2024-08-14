@@ -35,21 +35,27 @@ class gAtoms(Atoms):
 
             self.unit = h5auto_read(f, \
                     '/usrqa/unit', default='rydberg')
+            self.unit = self.unit.decode('utf-8')
 
             spin_polarization = h5auto_read(f, \
                     '/usrqa/spin_polarization', default='n')
+            spin_polarization = spin_polarization.decode('utf-8')
+
             self.set_ispin(spin_polarization)
 
             orbital_polarization = h5auto_read(f, \
                     '/usrqa/full_orbital_polarization', default='n')
+            orbital_polarization = orbital_polarization.decode('utf-8')
             self.set_orbital_polarization(orbital_polarization)
 
             spin_orbit_coup = h5auto_read(f, \
                     '/usrqa/spin_orbit_coup', default='n')
+            spin_orbit_coup = spin_orbit_coup.decode('utf-8')
             self.set_iso(spin_orbit_coup)
 
             crystal_field = h5auto_read(f, \
                     '/usrqa/crystal_field', default='y')
+            crystal_field = crystal_field.decode('utf-8')
             self.set_crystal_field(crystal_field)
 
             lhub = h5auto_read(f, \
@@ -67,16 +73,22 @@ class gAtoms(Atoms):
 
             unique_corr_symbol_list = h5auto_read(f, \
                     '/usrqa/unique_corr_symbol_list')
-            self.unique_corr_symbol_list = unique_corr_symbol_list.tolist()
+            #print("test-zy: unique_corr_symbol_list = ", unique_corr_symbol_list)
+            unique_corr_symbol_list = [s.decode('utf-8') for s in unique_corr_symbol_list]
+            self.unique_corr_symbol_list = unique_corr_symbol_list #.tolist()
             self.unique_df_list = h5auto_read(f, \
                     '/usrqa/unique_df_list')
+            self.unique_df_list = [s.decode('utf-8') for s in self.unique_df_list]
+            print("test-yz: unique_df_list = ", self.unique_df_list)
+
             self.unique_nf_list = h5auto_read(f, '/usrqa/unique_nf_list')
+
             if self.unique_nf_list is not None:
-                self.unique_nf_list = np.asfarray(self.unique_nf_list)
+                self.unique_nf_list = np.asarray(self.unique_nf_list)
             if self.lhub > 0:
-                self.unique_u_list = np.asfarray(h5auto_read(f, \
+                self.unique_u_list = np.asarray(h5auto_read(f, \
                         '/usrqa/unique_u_list_ev'))
-                self.unique_j_list = np.asfarray(h5auto_read(f, \
+                self.unique_j_list = np.asarray(h5auto_read(f, \
                         '/usrqa/unique_j_list_ev'))
                 if 'ryd' in self.unit:
                     self.unique_u_list /= Ryd_eV
@@ -244,7 +256,7 @@ class gAtoms(Atoms):
             S_vector = get_S_vector(_ls)
             L_vector = get_L_vector(_ls, iso=2)
             utrans = self.utrans_list[i]
-            for j, _S, _L in it.izip(it.count(), S_vector, L_vector):
+            for j, _S, _L in zip(it.count(), S_vector, L_vector):
                 S_vector[j] = utrans.T.conj().dot(_S).dot(utrans)
                 L_vector[j] = utrans.T.conj().dot(_L).dot(utrans)
             sx_list.append(S_vector[0])

@@ -4,7 +4,7 @@ from __future__ import print_function
 from itertools import product
 import numpy as np
 import h5py
-from scipy.misc import factorial as fact
+from scipy.special import factorial as fact
 from pyglib.math.matrix_util import unitary_transform_coulomb_matrix
 
 
@@ -20,7 +20,7 @@ def U_matrix(mode, l, radial_integrals=None, U_int=None, J_hund=None, T=None):
     # add spin-components
     norb = U_matrix.shape[0]
     norb2 = norb*2
-    Ufull_matrix = np.zeros((norb2,norb2,norb2,norb2), dtype=np.complex)
+    Ufull_matrix = np.zeros((norb2,norb2,norb2,norb2), dtype=np.complex128)
     if T is not None:
         # spin block
         Ufull_matrix[:norb,:norb,:norb,:norb] = U_matrix
@@ -101,7 +101,7 @@ def U_matrix_slater(l, radial_integrals=None, U_int=None, J_hund=None):
     # Basis of spherical harmonics Y_{-2}, Y_{-1}, Y_{0}, Y_{1}, Y_{2}
     # U^{spherical}_{m1 m4 m2 m3} = \sum_{k=0}^{2l} F_k
     # angular_matrix_element(l, k, m1, m2, m3, m4)
-    U_matrix = np.zeros((2*l+1,2*l+1,2*l+1,2*l+1),dtype=np.float)
+    U_matrix = np.zeros((2*l+1,2*l+1,2*l+1,2*l+1),dtype=float)
 
     m_range = range(-l,l+1)
     for n, F in enumerate(radial_integrals):
@@ -131,7 +131,7 @@ def U_matrix_kanamori(n_orb, U_int, J_hund):
                The four-index interaction matrix in the chosen basis.
     """
 
-    U_matrix  = np.zeros((n_orb,n_orb,n_orb,n_orb),dtype=np.float)
+    U_matrix  = np.zeros((n_orb,n_orb,n_orb,n_orb),dtype=float)
     m_range = range(n_orb)
     for m,mp in product(m_range,m_range):
         if m == mp:
@@ -164,7 +164,7 @@ def U_J_to_radial_integrals(l, U_int, J_hund):
                        Slater integrals [F0,F2,F4,..].
     """
 
-    F = np.zeros((l+1),dtype=np.float)
+    F = np.zeros((l+1),dtype=float)
     F[0] = U_int
     if l == 0:
         pass

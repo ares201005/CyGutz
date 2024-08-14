@@ -91,6 +91,7 @@ program cygutz
     call set_bnd_info(gp%io)
     call set_gmpi() !< kpt%diml was set here.
     call alloc_bnd()
+    write(gp%io, *) 'test-yz: read bare hamiltonian'
     call read_bare_hamiltonian()
     call rotate_bare_hamiltonian()
 
@@ -110,6 +111,8 @@ program cygutz
     call init_dc_std(gp%io)
 
     ! Initialise the kernel
+    write(gp%io, *)
+    write(gp%io, *) 'test-yz: initialize gwf kernel'
     call init_gkernel(gp%io)
 
     ! check the quasi-particle part with initial guess of {R, lambda}
@@ -121,8 +124,12 @@ program cygutz
     call calc_nks_pp(gp%io)
     call eval_sl_vec_all(1,gp%io)
 
+    write(gp%io, *) ''
+    write(gp%io, *) 'test-yz: iterative solving of GWF'
     !! Solve the set of Gutzwiller nonlinear equations.
     call g_newton_solver(gp%io,g_fcn)
+    write(gp%io, *) 'test-yz: leaving g_newton_solver'
+    write(gp%io, *)
 
     !! Save important data for analysis.
     call postsave()

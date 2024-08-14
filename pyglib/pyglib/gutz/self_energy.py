@@ -192,8 +192,8 @@ if __name__ == "__main__":
     rotations = [[[1, 0, 0], [0, 1, 0], [0, 0, 1]]]
     U, self_energy = get_self_energy(
         l_list, ispin, orbital_pol, cf, iso, rotations)
-    print " self_energy = "
-    print self_energy
+    print(" self_energy = ")
+    print(self_energy)
 
     # H cluster
     symbols = ['H', 'H', 'H', 'H', 'H', 'H']
@@ -201,12 +201,12 @@ if __name__ == "__main__":
                  [0., -2.0, 0.], [0., 0., 2.0], [0., 0., -2.0]]
     from pyglib.gutz.molecule import xyz_get_rot_list
     rotations = xyz_get_rot_list(symbols, positions, log='screen')
-    print "H-dimer rotations:"
-    print rotations
+    print("H-dimer rotations:")
+    print(rotations)
     l_list = [0, 0, 1]
     orbital_pol = 'n'
     cf = 'y'
     J, U, self_energy = get_self_energy(
         l_list, ispin, orbital_pol, cf, iso, rotations)
-    print " self_energy = "
-    print self_energy
+    print(" self_energy = ")
+    print(self_energy)

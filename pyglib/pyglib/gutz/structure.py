@@ -46,6 +46,9 @@ def get_gatoms():
 
     with h5py.File('ginit.h5', 'r') as f:
         symbols = f['/struct/symbols'][()]
+        symbols = [s.decode('utf-8') for s in symbols]
+        print("test-zy: symbols = ", symbols)
+
         cell = f['/struct/cell'][()]
         scaled_positions = f['/struct/scaled_positions'][()]
         if '/struct/case' in f:

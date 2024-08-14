@@ -100,6 +100,7 @@ def batch_initialize(cell, scaled_positions, symbols, case=None,
         f['/struct/cell'] = cell
         f['/struct/scaled_positions'] = scaled_positions
         f['/struct/symbols'] = symbols
+        print("test-zy: symbols in writing into h5py= ", symbols)
         f['/usrqa/crystal_field'] = crystal_field
         f['/usrqa/dist_cut'] = dist_cut
         f['/usrqa/full_orbital_polarization'] = full_orbital_polarization
