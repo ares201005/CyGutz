@@ -22,18 +22,18 @@ def sigmatomatrixbasis(sigma):
             continue
         if spots[0][0] == spots[1][0]:
             value = 1 / np.sqrt(float(num_spots))
-            matrix = np.zeros_like(sigma, dtype=np.complex)
+            matrix = np.zeros_like(sigma, dtype=np.complex128)
             matrix[spots[0], spots[1]] = value
             matrix_basis.append(matrix)
         else:
             # non-zero element
             value = 1 / np.sqrt(float(num_spots * 2))
-            matrix = np.zeros_like(sigma, dtype=np.complex)
+            matrix = np.zeros_like(sigma, dtype=np.complex128)
             matrix[spots[0], spots[1]] = value
             matrix[spots[1], spots[0]] = value
             matrix_basis.append(matrix)
             value = value * 1.j
-            matrix = np.zeros_like(sigma, dtype=np.complex)
+            matrix = np.zeros_like(sigma, dtype=np.complex128)
             matrix[spots[0], spots[1]] = value
             matrix[spots[1], spots[0]] = -value
             matrix_basis.append(matrix)
@@ -60,7 +60,7 @@ def matrixstructtobasis(m_struct):
             continue
         spots = spots.T
         value = 1 / np.sqrt(float(num_spots))
-        matrix = np.zeros_like(m_struct, dtype=np.complex)
+        matrix = np.zeros_like(m_struct, dtype=np.complex128)
         matrix[spots[0], spots[1]] = value
         matrix_basis.append(matrix)
     return matrix_basis
@@ -76,11 +76,11 @@ def listmatrixstructtobasis(m_struct_list):
 def hermitian_csc_matrix(i, j, n):
     if i == j:
         return csc_matrix(([1.0], [[i], [j]]), \
-                shape=(n, n), dtype=complex)
+                shape=(n, n), dtype=complex128)
     else:
         x = 1.j/np.sqrt(2.)
         return csc_matrix(([x, -x], [[i, j], [j, i]]), \
-                shape=(n, n), dtype=complex)
+                shape=(n, n), dtype=complex128)
 
 
 def hermitian_csc_matrix_basis(n, istart=0):

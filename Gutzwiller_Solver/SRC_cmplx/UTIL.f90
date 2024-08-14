@@ -1466,10 +1466,17 @@ module gutil
     logical,intent(in)::ltrans,lherm
       
     integer i
-    complex(q) b_(n,n),a_(n,n),c
+    complex(q) :: c
+    complex(q), allocatable :: b_(:,:), a_(:,:)
     complex(q),external::zdotc
       
+    !write(0,*) 'test-yz: n=', n
+    !write(0,*) "test-yz: a=", a
+
+    allocate(a_(n,n), b_(n,n))
     a_=a; a=0
+    !write(0,*) "test-yz: Successfully allocated and initialized arrays. a_ = ", a_
+
     do i=1,nb
         if(ltrans)then
             b_=transpose(b(:,:,i))
@@ -1477,9 +1484,12 @@ module gutil
             b_=b(:,:,i)
         endif
         c=zdotc(n*n,b_(1,1),1,a_(1,1),1)
+        !c = dot_product(reshape(b_, [n*n]), reshape(a, [n*n]))
         if(lherm)c=real(c,q)
         a=a+b_*c
     enddo
+    deallocate(b_, a_)
+
     return
       
     end subroutine get_zhm_expand_sym
